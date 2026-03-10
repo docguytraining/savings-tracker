@@ -1,0 +1,57 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Categories ────────────────────────────────────────────────────────
+    match /categories/{categoryId} {
+
+      allow read: if request.auth != null
+                  && resource.data.userId == request.auth.uid;
+
+      allow create: if request.auth != null
+                    && request.resource.data.userId    == request.auth.uid
+                    && request.resource.data.name      is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.allocationPercent is number
+                    && request.resource.data.allocationPercent >= 0
+                    && request.resource.data.allocationPercent <= 100;
+
+      allow update: if request.auth != null
+                    && resource.data.userId == request.auth.uid
+                    && request.resource.data.userId == request.auth.uid;
+
+      allow delete: if request.auth != null
+                    && resource.data.userId == request.auth.uid;
+    }
+
+    // ── Transactions ──────────────────────────────────────────────────────
+    match /transactions/{transactionId} {
+
+      allow read: if request.auth != null
+                  && resource.data.userId == request.auth.uid;
+
+      allow create: if request.auth != null
+                    && request.resource.data.userId  == request.auth.uid
+                    && request.resource.data.amount  is number
+                    && request.resource.data.amount  >  0
+                    && request.resource.data.type    in ['deposit', 'withdrawal'];
+
+      allow update: if request.auth != null
+                    && resource.data.userId == request.auth.uid;
+
+      allow delete: if request.auth != null
+                    && resource.data.userId == request.auth.uid;
+    }
+
+    // ── Block the old collection ──────────────────────────────────────────
+    match /savingsEntries/{entry} {
+      allow read, write: if false;
+    }
+
+    // ── Deny everything else ──────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
