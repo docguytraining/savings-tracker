@@ -9,7 +9,7 @@
 //   2. Re-deploy. The activate event will delete the old cache automatically.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v7';
 const CACHE_NAME    = `savings-tracker-${CACHE_VERSION}`;
 
 // Files that make up the "app shell" — the minimum needed to render the UI

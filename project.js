@@ -17,7 +17,8 @@ import {
 // Firebase init
 // ─────────────────────────────────────────────────────────────────────────────
 const firebaseConfig = {
-    apiKey:            "AIzaSyCqXNB2n0kwCWPA-pzTUsX2bwrpOg81_qE",
+    // This key is public but restricted to specific domains in Google Cloud Console.
+    apiKey:            "PASTE_YOUR_NEW_KEY_HERE",
     authDomain:        "savings-tracker-d2970.firebaseapp.com",
     projectId:         "savings-tracker-d2970",
     storageBucket:     "savings-tracker-d2970.firebasestorage.app",
